@@ -28,9 +28,15 @@ Route::post('reportes/{id}/rechazar', [App\Http\Controllers\AutorizacionControll
     ->name('reportes.rechazar')
     ->middleware([\App\Http\Middleware\Authenticate::class, \App\Http\Middleware\RolMiddleware::class]);
 
+
+// Login y logout
 Route::get('/', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+// Registro
+Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register.post');
 
 // Rutas para solicitudes (solo estudiantes pueden crear, admins pueden ver todas)
 Route::middleware([\App\Http\Middleware\Authenticate::class, \App\Http\Middleware\RolMiddleware::class])->group(function () {

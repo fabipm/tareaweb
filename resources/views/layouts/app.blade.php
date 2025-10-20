@@ -24,11 +24,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand mx-auto" href="{{ url('/') }}">Préstamo de Servidores</a>
-        </div>
-    </nav>
+    <!-- Encabezado eliminado -->
     <main>
         <div id="main-content">
             @yield('content')

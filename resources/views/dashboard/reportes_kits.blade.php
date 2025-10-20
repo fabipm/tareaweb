@@ -20,15 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card shadow-sm mb-3 border-primary">
-                        <div class="card-body text-center">
-                            <small class="text-primary">Stock disponible</small>
-                            <h3 class="mt-2 text-primary">{{ $stockTotal ?? 0 }}</h3>
-                            <div class="text-muted">Unidades físicas</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Tarjeta de Stock disponible eliminada -->
                 <div class="col-md-3">
                     <div class="card shadow-sm mb-3 border-warning">
                         <div class="card-body text-center">

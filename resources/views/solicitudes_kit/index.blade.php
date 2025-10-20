@@ -1,3 +1,11 @@
+@php
+    // Si el usuario es estudiante, redirigir al dashboard principal
+    if(Auth::user() && Auth::user()->rol === 'Estudiante') {
+        header('Location: ' . route('dashboard.estudiante'));
+        exit;
+    }
+@endphp
+
 @extends('layouts.app')
 
 @section('content')

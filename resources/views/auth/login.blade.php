@@ -1,28 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4>Iniciar Sesión</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login.post') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="codigo_usuario" class="form-label">Código de Usuario</label>
-                            <input type="text" name="codigo_usuario" class="form-control" required autofocus>
-                        </div>
-                        <div class="mb-3">
-                            <label for="clave" class="form-label">Contraseña</label>
-                            <input type="password" name="clave" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-                    </form>
-                </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4" style="min-width:350px; max-width:400px; width:100%;">
+        <h2 class="mb-4 text-center">Iniciar Sesión</h2>
+        <form method="POST" action="{{ route('login.post') }}">
+            @csrf
+            <div class="mb-3">
+                <label for="codigo_usuario" class="form-label">Código de Usuario</label>
+                <input type="text" name="codigo_usuario" class="form-control" required autofocus>
             </div>
+            <div class="mb-3">
+                <label for="clave" class="form-label">Contraseña</label>
+                <input type="password" name="clave" class="form-control" required>
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        </form>
+        <div class="mt-3 text-center">
+            ¿No tienes cuenta? <a href="{{ route('register') }}">Regístrate</a>
         </div>
     </div>
 </div>

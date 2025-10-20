@@ -35,7 +35,11 @@
                         <p class="text-muted">No se solicitaron componentes adicionales.</p>
                     @endif
 
-                    <a href="{{ route('solicitudes.kit.index') }}" class="btn btn-secondary mt-3">Volver</a>
+                    @if(Auth::user() && Auth::user()->rol === 'Estudiante')
+                        <a href="{{ route('dashboard.estudiante') }}" class="btn btn-secondary mt-3">Volver</a>
+                    @else
+                        <a href="{{ route('dashboard.autorizar.kits') }}" class="btn btn-secondary mt-3">Volver</a>
+                    @endif
                 </div>
             </div>
         </div>

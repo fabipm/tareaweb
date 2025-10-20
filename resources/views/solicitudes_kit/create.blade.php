@@ -13,9 +13,13 @@
     @extends('layouts.app')
 
     @section('content')
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
+    <div class="container-fluid">
+        <div class="row">
+            @include('dashboard.sidebar')
+            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                <div class="pt-3 pb-2 mb-3">
+                    <h2>Solicitud de Préstamo de Kit Arduino</h2>
+                </div>
 @endif
 
 <div class="card shadow-sm">
@@ -408,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
  -->
 
 @if(!($in_dashboard ?? false))
-            </div>
+            </main>
         </div>
     </div>
 

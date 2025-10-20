@@ -27,18 +27,23 @@ class DashboardController extends Controller
             $soportes = \App\Models\Usuario::where('rol', 'Soporte')->where('estado', 1)->get();
         }
         if ($show === 'history') {
-            // Mostrar solo las solicitudes del usuario autenticado
+            // Mostrar solo las solicitudes de préstamo de servidores del usuario autenticado
             $solicitudes = \App\Models\Solicitud::with('servidor')
                 ->where('id_usuario', Auth::id())
                 ->orderBy('id_solicitud', 'desc')
                 ->get();
         } elseif ($show === 'history-kit') {
+            // Mostrar solo las solicitudes de kits del usuario autenticado
             $solicitudes = \App\Models\SolicitudKit::with('kit')
                 ->where('id_usuario', Auth::id())
                 ->orderBy('id_solicitud_kit','desc')
                 ->get();
         } else {
-            $solicitudes = [];
+            // Mostrar historial de kits SOLO del usuario autenticado por defecto
+            $solicitudes = \App\Models\SolicitudKit::with('kit')
+                ->where('id_usuario', Auth::id())
+                ->orderBy('id_solicitud_kit','desc')
+                ->get();
         }
         return view('dashboard.estudiante', compact('show', 'servidores', 'soportes', 'solicitudes','kits'));
     }

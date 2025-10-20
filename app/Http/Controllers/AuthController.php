@@ -28,15 +28,15 @@ class AuthController extends Controller
             ->where('estado', 1)
             ->first();
 
-    if ($usuario && $usuario->clave === md5($credentials['clave'])) {
-        Auth::login($usuario);
-        // Regenerate session AFTER login to prevent session fixation
-        $request->session()->regenerate();
-                if ($usuario->rol === 'Administrador') {
-                    return redirect()->route('dashboard.admin');
-                } else {
-                    return redirect()->route('dashboard.estudiante');
-                }
+        if ($usuario && $usuario->clave === md5($credentials['clave'])) {
+            Auth::login($usuario);
+            // Regenerate session AFTER login to prevent session fixation
+            $request->session()->regenerate();
+            if ($usuario->rol === 'Administrador') {
+                return redirect()->route('dashboard.admin');
+            } else {
+                return redirect()->route('dashboard.estudiante');
+            }
         }
 
         return back()->withErrors(['codigo_usuario' => 'Credenciales incorrectas'])->withInput();
@@ -50,4 +50,34 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
         return redirect()->route('login');
     }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'codigo_usuario' => 'required|digits:10|unique:usuarios,codigo_usuario',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:usuarios,correo',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $usuario = Usuario::create([
+            'codigo_usuario' => $data['codigo_usuario'],
+            'nombre_completo' => $data['name'],
+            'correo' => $data['email'],
+            'clave' => md5($data['password']),
+            'rol' => 'Estudiante',
+            'estado' => 1,
+        ]);
+
+        Auth::login($usuario);
+        $request->session()->regenerate();
+
+        return redirect()->route('dashboard.estudiante');
+    }
 }
+
