@@ -188,3 +188,62 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     @endsection
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectServidor = document.getElementById('select-servidor');
+    const serieServidor = document.getElementById('serie_servidor');
+    const tipoServidor = document.getElementById('tipo_servidor');
+    const caracteristicasServidor = document.getElementById('caracteristicas_servidor');
+
+    // Manejar cambio en la selección del servidor
+    selectServidor.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        
+        if (selectedOption.value) {
+            // Obtener datos del servidor seleccionado desde los data attributes
+            const serie = selectedOption.getAttribute('data-serie') || '';
+            const tipo = selectedOption.getAttribute('data-tipo') || '';
+            const caracteristicas = selectedOption.getAttribute('data-caracteristicas') || '';
+            
+            // Llenar los campos de detalles del servidor
+            serieServidor.value = serie;
+            tipoServidor.value = tipo;
+            caracteristicasServidor.value = caracteristicas;
+        } else {
+            // Limpiar los campos si no hay servidor seleccionado
+            serieServidor.value = '';
+            tipoServidor.value = '';
+            caracteristicasServidor.value = '';
+        }
+    });
+
+    // Funcionalidad para agregar integrantes
+    const integrantesList = document.getElementById('integrantes-list');
+    const addIntegranteBtn = document.getElementById('add-integrante');
+    let integranteCount = 0;
+
+    addIntegranteBtn.addEventListener('click', function() {
+        integranteCount++;
+        const integranteDiv = document.createElement('div');
+        integranteDiv.className = 'row mb-2 integrante-row';
+        integranteDiv.innerHTML = `
+            <div class="col-md-5">
+                <input type="text" name="integrantes[${integranteCount}][codigo]" class="form-control" placeholder="Código del integrante" required>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="integrantes[${integranteCount}][nombre]" class="form-control" placeholder="Nombre completo del integrante" required>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger btn-sm remove-integrante">×</button>
+            </div>
+        `;
+        integrantesList.appendChild(integranteDiv);
+
+        // Agregar evento para remover integrante
+        integranteDiv.querySelector('.remove-integrante').addEventListener('click', function() {
+            integranteDiv.remove();
+        });
+    });
+});
+</script>
