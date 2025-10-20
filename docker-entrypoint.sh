@@ -15,9 +15,9 @@ fi
 # Ensure storage permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true
 
-# Run migrations if requested (optional)
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-  php artisan migrate --force || true
-fi
+# Migrations are intentionally not run automatically in this entrypoint.
+# If you need to run migrations, do it manually with:
+#   docker exec -it <container> php artisan migrate --force
+# or run a one-off job in your hosting provider.
 
 exec "$@"
