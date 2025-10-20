@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for Laravel optimized for Render
 
 # Builder: composer + node build
-FROM composer:2 AS composer
+FROM docker.io/composer:2.7 AS composer
 
 FROM node:20-bullseye AS node-build
 WORKDIR /app
