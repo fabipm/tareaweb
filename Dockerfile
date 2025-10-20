@@ -34,7 +34,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 
 # Build frontend assets
 COPY --from=node-build /app /app
-COPY resources/js resources/css package.json package-lock.json webpack.mix.js ./
+# Support Vite (vite.config.js or vite.config.ts). Use glob to copy either file.
+COPY resources/js resources/css package.json package-lock.json vite.config.* ./
 RUN npm ci --silent && npm run build || true
 
 # Copy CA placeholder (optional) and entrypoint
